@@ -1,0 +1,47 @@
+
+# application.yml
+spring:
+  application:
+    name: sso
+
+  oauth2:
+    client:
+      # These client credentials are the result of OneDrive registration
+
+# This is for the localhost
+      clientId: 000000004018065B
+      clientSecret: 7x9WeBjA5uPmyIv2cvutcpnAjDy2fnc4
+      userAuthorizationUri: https://login.live.com/oauth20_authorize.srf
+      redirectUri: http://localhost:8080/sso/login
+
+# This is for the AWS cloud
+
+#      clientId: 0000000048182A69
+#      clientSecret: aUIG2TvWBI9g8-66RQdJbfZXwu7QYhcM
+#      userAuthorizationUri: https://login.live.com/oauth20_authorize.srf
+#      redirectUri: http://ec2-52-91-63-214.compute-1.amazonaws.com:8080/sso/login
+
+      accessTokenUri: https://login.live.com/oauth20_token.srf
+      scope: onedrive.readwrite
+
+      clientAuthenticationScheme: form
+    resource:
+      # This is need so we can get user info. Needed even if we dont want to use it.
+      userInfoUri: https://apis.live.net/v5.0/me
+      # This appears to be optional:
+      preferTokenInfo: false
+
+server:
+  port: ${PORT:8080}
+  context-path: /sso
+
+# For some reason, we need to turn basic security off,
+# otherwise we will be prompted for credentials unprotected resources.
+security.basic.enabled: false
+
+
+#logging:
+#  level:
+#    org.springframework: DEBUG
+
+
